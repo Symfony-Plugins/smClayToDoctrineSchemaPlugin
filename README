@@ -1,0 +1,45 @@
+smClayToDoctrineSchemaPlugin
+============================
+
+This is a highly experimental release that will convert a clay model into a doctrine schema. I am expanding this plugin as required, and will post updates as they are available.
+
+This plugin is based on the [sfDbDesignerPlugin](http://www.symfony-project.org/plugins/sfDbDesignerPlugin) and was inspired by the post by [al_n](http://www.symfony-project.org/forum/index.php/m/15387/) on the forums.
+
+
+__note:__ I have only been working with INNODB tables in a mysql database. Some of the data-types are probably not implemented yet
+
+
+Working
+-------
+* Creation of tables
+* Creation of relationships
+* Creation of 1:1 relationships
+* Addition of 'global options' via 'Begin Script' section of clay
+* Using 'foreignAlias' for relations
+
+TODO
+----
+* Fix indexes and unique keys
+* ?
+
+
+###Creating a 1:1 relationship###
+I am relatively new to doctrine, so some of these processes may be incorrect.
+
+1. Create a *parent* and a *slave* table. In the *slave* table, add a foreign key in the normal fashion (It seems Doctrine fails when using straight ID<->ID links).
+
+2. __(Optional)__ Add the 'foreignAlias' in the 'Logical Name' section of the relationship properties
+
+
+###Adding global options to the schema.yml###
+Often, you may wish to set the character set and collation for all of your tables. To do this, we can utilise the 'begin script' section of the model.
+
+1. Right click the canvas area and click 'Edit Database Model'. Choose 'Begin Script'.
+
+2. Paste the following:
+
+	options:
+	  type: INNODB
+	  charset: utf8
+	  collate: utf8_unicode_ci
+
